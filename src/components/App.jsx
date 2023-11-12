@@ -1,36 +1,41 @@
-import { Component } from 'react';
-import { Section } from './section/Section';
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
-  
-  onLeaveFeedback = (option) => {
-    this.setState((prevState) => {
-      return {
-        [option]: prevState[option] + 1,
-      };
-  });
-  };
 
-  countTotalFeedback = () => {
-    return Object.values(this.state).reduce((val, number) => 
-    val + number, 0)
+import { useState } from 'react';
+import { Section } from './section/Section';
+export const App= () =>{
+  const [good, setGood]=useState(0);
+  const [neutral, setNeutral]=useState(0);
+  const [bad, setBad]=useState(0);
   
-  };
-  countPositiveFeedbackPercentage =() =>{
-      return Math.round((this.state.good/this.countTotalFeedback())*100)||0;
+ const onLeaveFeedback = (option) => {
+    switch (option) {
+      case 'good' : setGood(prevGood =>(prevGood+1)); 
+      break;
+      case 'neutral' : setNeutral(prevNeutral => prevNeutral+1);
+      break;
+      case 'bad' : setBad(prevBad => prevBad+1);
+      break;
+      default: return
+
+
+    }
     
   };
-  render() {
+
+  const countTotalFeedback = () => {
+    return good+bad+neutral
+  
+  };
+ const countPositiveFeedbackPercentage =() =>{
+      return Math.round((good/countTotalFeedback())*100)||0;
+    
+  };
+  const state = {good, neutral, bad}
     return <div>
       <Section
-      state={this.state}
-      onLeaveFeedback={this.onLeaveFeedback}
-      countTotalFeedback={this.countTotalFeedback()}
-      countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage()}/>
+      state={state}
+      onLeaveFeedback={onLeaveFeedback}
+      countTotalFeedback={countTotalFeedback()}
+      countPositiveFeedbackPercentage={countPositiveFeedbackPercentage()}/>
     </div>;
-  }
+  
 }

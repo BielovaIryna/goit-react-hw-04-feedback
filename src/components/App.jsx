@@ -8,11 +8,11 @@ export const App= () =>{
   
  const onLeaveFeedback = (option) => {
     switch (option) {
-      case 'good' : setGood(prevGood =>(prevGood+1)); 
+      case 'good' : setGood(prev =>(prev+1)); 
       break;
-      case 'neutral' : setNeutral(prevNeutral => prevNeutral+1);
+      case 'neutral' : setNeutral(prev => prev+1);
       break;
-      case 'bad' : setBad(prevBad => prevBad+1);
+      case 'bad' : setBad(prev => prev+1);
       break;
       default: return
 
